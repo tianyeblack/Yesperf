@@ -1,5 +1,6 @@
 ## Website Performance Optimization portfolio project
 
+Usage: Click on index.html or visit my github page <http://tianyeblack.github.io/Yesperf>
 ###Part 1: Optimize PageSpeed Insights score for index.html
 
 1. Minifying CSS and JS files, provided by PageSpeed;
