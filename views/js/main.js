@@ -427,7 +427,6 @@ var resizePizzas = function(size) {
         var windowwidth = document.getElementById("randomPizzas").offsetWidth;
         var oldsize = oldwidth / windowwidth;
 
-        // TODO: change to 3 sizes? no more xl?
         // Changes the slider value to a percent width
         function sizeSwitcher (size) {
             switch(size) {
@@ -437,6 +436,8 @@ var resizePizzas = function(size) {
                 return 0.3333;
                 case "3":
                 return 0.5;
+                case "4":
+                return 0.6667;
                 default:
                 console.log("bug in sizeSwitcher");
             }
@@ -511,10 +512,14 @@ function updatePositions() {
 
     var items = document.getElementsByClassName('mover');
     var bodyScrollTop = document.body.scrollTop;
-    var i = 0;
+    // Calculate all possible phases before hand
+    var phases = [];
+    for (var i = 0; i < 5; i++) {
+      phases[i] = Math.sin((bodyScrollTop / 1250) + i);
+    }
+    i = 0;
     while(i < items.length) {
-        var phase = Math.sin((bodyScrollTop / 1250) + (i % 5));
-        items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
+        items[i].style.left = items[i].basicLeft + 100 * phases[i % 5] + 'px';
         i++;
     }
 
@@ -534,11 +539,9 @@ window.addEventListener('scroll', updatePositions);
 // Generates the sliding pizzas when the page loads.
 document.addEventListener('DOMContentLoaded', function() {
     // Depending on how big the browser window is, generate proper columns and rows of sliding pizzas.
-    var cols = Math.ceil(window.outerWidth / 256) + 1;
+    var cols = Math.ceil(window.outerWidth / 256);
     var s = 256;
-    console.log(window.outerHeight);
-    console.log(window.outerWidth);
-    for (var i = 0; i < (Math.ceil(window.outerHeight / 256) + 1) * cols; i++) {
+    for (var i = 0; i < (Math.ceil(window.outerHeight / 256)) * cols; i++) {
         var elem = document.createElement('img');
         elem.className = 'mover';
         elem.src = "images/pizza.png";
